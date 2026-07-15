@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hệ thống Xét tuyển Trung cấp 2026</title>
-    <link rel="apple-touch-icon" href="https://pcthssv.github.io/tuyen-sinh-TC-2026/icon-180.png">
-    <link rel="apple-touch-icon-precomposed" href="https://pcthssv.github.io/tuyen-sinh-TC-2026/icon-180.png">
+    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1tw5cj2xn99ZqvscqAjJJhktxbb3jxKAz">
+    <link rel="apple-touch-icon-precomposed" href="https://lh3.googleusercontent.com/d/1tw5cj2xn99ZqvscqAjJJhktxbb3jxKAz">
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; background-color: #f9fafb; color: #374151; }
         .loader { width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top: 3px solid #1d4ed8; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 16px; }
@@ -15,26 +15,41 @@
 </head>
 <body>
     <div class="loader"></div>
-    <p>Đang đồng bộ phiên đăng nhập...</p>
+    <p>Đang xác thực phiên làm việc an toàn...</p>
 
     <script>
-        // 1. Trích xuất mã Session ID từ URL của trang GitHub Pages này
+        // 1. Trích xuất mã Session ID từ URL của GitHub Pages
         let urlParams = new URLSearchParams(window.location.search);
         let sid = urlParams.get('sid');
-  
+        
+        if (!sid) {
+            sid = localStorage.getItem('ts_gh_sid');
+        }
+
+        // Đường dẫn cổng thực thi Web App chính thức của bạn
         const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxFungJ0uRhuQj-vNNRO4RbNjRCHavD0uwyoaIsrUQwrNLogYmsB-9Dmfav1UWog4zFFg/exec";
 
         if (sid) {
             localStorage.setItem('ts_gh_sid', sid);
-            // Thực hiện chuyển hướng an toàn
-            window.location.href = GOOGLE_WEB_APP_URL + "?sid=" + sid;
+
+            // GIẢI PHÁP VƯỢT RÀO BẢO MẬT: Tạo Form ẩn để xóa sạch các hậu tố /u/8/ do Google tự phát sinh
+            let form = document.createElement('form');
+            form.method = 'GET';
+            form.action = GOOGLE_WEB_APP_URL;
+
+            // Đính kèm tham số mã phiên sid vào form
+            let inputSid = document.createElement('input');
+            inputSid.type = 'hidden';
+            inputSid.name = 'sid';
+            inputSid.value = sid;
+            form.appendChild(inputSid);
+
+            // Đưa form vào body và kích hoạt gửi dữ liệu sạch lên Server
+            document.body.appendChild(form);
+            form.submit();
         } else {
-            let cachedSid = localStorage.getItem('ts_gh_sid');
-            if (cachedSid) {
-                window.location.href = GOOGLE_WEB_APP_URL + "?sid=" + cachedSid;
-            } else {
-                window.location.href = GOOGLE_WEB_APP_URL;
-            }
+            // Nếu hoàn toàn không có phiên, chuyển thẳng về link gốc
+            window.location.href = GOOGLE_WEB_APP_URL;
         }
     </script>
 </body>
