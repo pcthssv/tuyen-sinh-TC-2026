@@ -21,9 +21,8 @@
         // 1. Trích xuất mã Session ID từ URL của trang GitHub Pages này
         let urlParams = new URLSearchParams(window.location.search);
         let sid = urlParams.get('sid');
-        
-        // Cấu hình URL gốc Google Web App của bạn (Thay chuỗi XXXX bằng ID mã script thực tế)
-        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/1Kw6kigw8QLRHXWcSvLImpXgX-HRim0O8a804zYeyLkM/exec";
+  
+        const GOOGLE_WEB_APP_URL = "https://script.google.com/a/macros/ctec.edu.vn/s/AKfycbxFungJ0uRhuQj-vNNRO4RbNjRCHavD0uwyoaIsrUQwrNLogYmsB-9Dmfav1UWog4zFFg/exec";
 
         if (sid) {
             // Lưu lại vào localStorage của trang GitHub phòng hờ thiết bị hỗ trợ
