@@ -22,20 +22,17 @@
         let urlParams = new URLSearchParams(window.location.search);
         let sid = urlParams.get('sid');
   
-        const GOOGLE_WEB_APP_URL = "https://script.google.com/a/macros/ctec.edu.vn/s/AKfycbxFungJ0uRhuQj-vNNRO4RbNjRCHavD0uwyoaIsrUQwrNLogYmsB-9Dmfav1UWog4zFFg/exec";
+        const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxFungJ0uRhuQj-vNNRO4RbNjRCHavD0uwyoaIsrUQwrNLogYmsB-9Dmfav1UWog4zFFg/exec";
 
         if (sid) {
-            // Lưu lại vào localStorage của trang GitHub phòng hờ thiết bị hỗ trợ
             localStorage.setItem('ts_gh_sid', sid);
-            // Kích hoạt điều hướng trực tiếp bỏ qua khung iframe bảo mật
+            // Thực hiện chuyển hướng an toàn
             window.location.href = GOOGLE_WEB_APP_URL + "?sid=" + sid;
         } else {
-            // Nếu mở trực tiếp icon mà không có tham số mới, kiểm tra xem có sid cũ trong máy không
             let cachedSid = localStorage.getItem('ts_gh_sid');
             if (cachedSid) {
                 window.location.href = GOOGLE_WEB_APP_URL + "?sid=" + cachedSid;
             } else {
-                // Trường hợp hoàn toàn mới, chuyển về trang đăng nhập thô
                 window.location.href = GOOGLE_WEB_APP_URL;
             }
         }
