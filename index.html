@@ -18,7 +18,6 @@
     <p>Đang xác thực phiên làm việc an toàn...</p>
 
     <script>
-        // 1. Trích xuất mã Session ID từ URL của GitHub Pages
         let urlParams = new URLSearchParams(window.location.search);
         let sid = urlParams.get('sid');
         
@@ -26,29 +25,25 @@
             sid = localStorage.getItem('ts_gh_sid');
         }
 
-        // Đường dẫn cổng thực thi Web App chính thức của bạn
         const GOOGLE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxFungJ0uRhuQj-vNNRO4RbNjRCHavD0uwyoaIsrUQwrNLogYmsB-9Dmfav1UWog4zFFg/exec";
 
         if (sid) {
             localStorage.setItem('ts_gh_sid', sid);
 
-            // GIẢI PHÁP VƯỢT RÀO BẢO MẬT: Tạo Form ẩn để xóa sạch các hậu tố /u/8/ do Google tự phát sinh
+            // ĐỔI SANG PHƯƠNG THỨC POST ĐỂ GIẤU HOÀN TOÀN BIẾN TRÊN URL
             let form = document.createElement('form');
-            form.method = 'GET';
+            form.method = 'POST'; 
             form.action = GOOGLE_WEB_APP_URL;
 
-            // Đính kèm tham số mã phiên sid vào form
             let inputSid = document.createElement('input');
             inputSid.type = 'hidden';
             inputSid.name = 'sid';
             inputSid.value = sid;
             form.appendChild(inputSid);
 
-            // Đưa form vào body và kích hoạt gửi dữ liệu sạch lên Server
             document.body.appendChild(form);
             form.submit();
         } else {
-            // Nếu hoàn toàn không có phiên, chuyển thẳng về link gốc
             window.location.href = GOOGLE_WEB_APP_URL;
         }
     </script>
